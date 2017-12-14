@@ -14,6 +14,7 @@ from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
 ###############################################
+
 # the script
 import requests, time, re
 from api.models import *
