@@ -19,6 +19,8 @@ application = get_wsgi_application()
 import requests, time, re
 from api.models import *
 
+print('Starting request for teams...')
+
 url_front = 'https://api.sportradar.us/soccer-t3/eu/en/tournaments/sr:tournament:'
 url_back = '/info.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
 league_ids = ['8','17','23','34','35']
