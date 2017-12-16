@@ -8,7 +8,7 @@ def update_match_stats(date='today'):
     date -- a date string in YYYY-MM-DD form or today to use today's date
     """
     # set date_string dynamically
-    if date != 'today':
+    if date == 'today':
         date_string = datetime.datetime.today().strftime('%Y-%m-%d')
     else:
         date_string = date
@@ -28,7 +28,6 @@ def update_match_stats(date='today'):
     schedule_data = schedule_response.json()
     events = schedule_data['sport_events']
     match_ids = []
-    print('here')
     for event in events:
         country_code = event['tournament']['category']['country_code']
         if country_code in league_ids:

@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 CRONJOBS = [
-    ('* * * * *', 'api.cron.update_match_stats', '>> ~/Desktop/cron.log')
+    ('0 1 * * *', 'api.cron.update_match_stats')
 ]
 
 MIDDLEWARE = [
