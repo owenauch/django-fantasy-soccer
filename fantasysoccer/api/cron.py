@@ -1,0 +1,91 @@
+import requests, re, datetime, time
+from api.models import *
+
+def update_match_stats(date='today'):
+    """Update match stats in database
+
+    Keyword arguments:
+    date -- a date string in YYYY-MM-DD form or today to use today's date
+    """
+    # set date_string dynamically
+    if date != 'today':
+        date_string = datetime.datetime.today().strftime('%Y-%m-%d')
+    else:
+        date_string = date
+
+    print('Starting request for match stats...')
+
+    schedule_url_front = 'https://api.sportradar.us/soccer-xt3/eu/en/schedules/'
+    schedule_url_back = '/schedule.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
+    league_ids = ['ENG','ESP','ITA','FRA','DEU']
+
+    match_url_front = 'https://api.sportradar.us/soccer-xt3/eu/en/matches/'
+    match_url_back = '/timeline.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
+
+    # get match ids
+    schedule_url = schedule_url_front + date_string + schedule_url_back
+    schedule_response = requests.get(schedule_url)
+    schedule_data = schedule_response.json()
+    events = schedule_data['sport_events']
+    match_ids = []
+    print('here')
+    for event in events:
+        country_code = event['tournament']['category']['country_code']
+        if country_code in league_ids:
+            match_ids.append(event['id'])
+
+    # get match stats for each player with match ids
+    for id in match_ids:
+        time.sleep(1)
+        match_url = match_url_front + str(id) + match_url_back
+        match_response = requests.get(match_url)
+        match_data = match_response.json()
+        teams = match_data['statistics']['teams']
+        print('Stats for ' + match_data['sport_event']['competitors'][0]['name'] + " vs " + match_data['sport_event']['competitors'][1]['name'] + ':')
+        for team in teams:
+            players = team['players']
+            for player in players:
+                # get id as int
+                id_string = player['id']
+                id_match = re.search(r'(\d+)$', id_string)
+                id = int(id_string[id_match.start():id_match.end()])
+
+                # find player record
+                p = Player.objects.get(pk=id)
+                print(p.name)
+
+                # if there's already a stat from this game, delete it
+                MatchStat.objects.filter(match_date=date_string, player_id=id).delete()
+
+                # if they're a goalie
+                shots_saved, shots_faced, penalties_saved, penalties_faced = 0, 0, 0, 0
+                if 'shots_faced_saved' in player:
+                    shots_saved = player['shots_faced_saved']
+                    shots_faced = player['shots_faced_total']
+                    penalties_saved = player['penalties_saved']
+                    penalties_faced = player['penalties_faced']
+
+                # check if they have full stats
+                if 'interceptions' in player:
+                    stat = MatchStat(player=p, substituted_in=player['substituted_in'], substituted_out=player['substituted_out'],
+                        goals=player['goals_scored'], assists=player['assists'], yellow_cards=player['yellow_cards'],
+                        yellow_red_cards=player['yellow_red_cards'], red_cards=player['red_cards'],
+                        interceptions=player['interceptions'], chances_created=player['chances_created'],
+                        successful_crosses=player['crosses_successful'], crosses=player['crosses_total'],
+                        successful_tackles=player['duels_tackle_successful'], tackles=player['duels_tackle_total'],
+                        goals_conceded=player['goals_conceded'], shots_saved=shots_saved, shots_faced=shots_faced,
+                        penalties_faced=penalties_faced, penalties_saved=penalties_saved,
+                        fouls_committed=player['fouls_committed'], shots_on_goal=player['shots_on_goal'],
+                        shots_off_goal=player['shots_off_goal'], shots_blocked=player['shots_blocked'],
+                        minutes_played=player['minutes_played'], penalty_goals=player['goals_by_penalty'],
+                        match_date=date_string)
+                    stat.save()
+                else:
+                    stat = MatchStat(player=p, substituted_in=player['substituted_in'], substituted_out=player['substituted_out'],
+                        goals=player['goals_scored'], assists=player['assists'], yellow_cards=player['yellow_cards'],
+                        yellow_red_cards=player['yellow_red_cards'], red_cards=player['red_cards'],
+                        match_date=date_string)
+                    stat.save()
+        print('----------------------------------------------')
+
+    print('Today\'s match stats successfully added to DB!')

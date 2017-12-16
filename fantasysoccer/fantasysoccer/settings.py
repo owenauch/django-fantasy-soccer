@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'api'
 ]
 
-# CRONJOBS = [
-#    ('* * * * * *', 'api.cron.update_match_stats')
-# ]
+CRONJOBS = [
+    ('* * * * *', 'api.cron.update_match_stats', '>> ~/Desktop/cron.log')
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
