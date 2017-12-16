@@ -16,8 +16,7 @@ application = get_wsgi_application()
 ###############################################
 
 # the script
-import requests, time, re
-from django.utils.dateparse import parse_date
+import requests, re, time
 from api.models import *
 
 print('Starting request for players...')

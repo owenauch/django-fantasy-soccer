@@ -38,8 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_crontab',
     'api'
 ]
+
+# CRONJOBS = [
+#    ('* * * * * *', 'api.cron.update_match_stats')
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
