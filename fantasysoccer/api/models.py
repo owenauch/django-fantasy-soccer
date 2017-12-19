@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# teams in real life
 class Team(models.Model):
     COUNTRY_CODES = (
         ('ENG', 'England'),
@@ -57,3 +57,14 @@ class MatchStat(models.Model):
     minutes_played = models.IntegerField(default=0)
     penalty_goals = models.IntegerField(default=0)
     match_date = models.DateField(blank=False)
+
+# user clubs within the game
+class Club(models.Model):
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    manager = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    transfer_balance = models.IntegerField(default=200000000)
+    players = models.ManyToManyField(Player)
+
+class League(models.Model):
+    name = models.CharField(max_length=200)
