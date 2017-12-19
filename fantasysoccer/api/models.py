@@ -68,3 +68,10 @@ class Club(models.Model):
 
 class League(models.Model):
     name = models.CharField(max_length=200)
+
+class Roster(models.Model):
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+
+class Matchweek(models.Model):
+    start_date = models.DateField(blank=False)
+    end_date = models.DateField(blank=False)
