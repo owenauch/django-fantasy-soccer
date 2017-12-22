@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # teams in real life
 class Team(models.Model):
@@ -58,6 +59,9 @@ class MatchStat(models.Model):
     penalty_goals = models.IntegerField(default=0)
     match_date = models.DateField(blank=False)
 
+class League(models.Model):
+    name = models.CharField(max_length=200)
+
 # user clubs within the game
 class Club(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
@@ -66,12 +70,26 @@ class Club(models.Model):
     transfer_balance = models.IntegerField(default=200000000)
     players = models.ManyToManyField(Player)
 
-class League(models.Model):
-    name = models.CharField(max_length=200)
-
-class Roster(models.Model):
-    club = models.ForeignKey(Club, on_delete=models.CASCADE)
-
 class Matchweek(models.Model):
     start_date = models.DateField(blank=False)
     end_date = models.DateField(blank=False)
+
+class Roster(models.Model):
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    week = models.ForeignKey(Matchweek, on_delete=models.CASCADE)
+    gk = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='gk')
+    gk_sub = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='gk_sub')
+    d_one = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='d_one')
+    d_two = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='d_two')
+    d_three = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='d_three')
+    d_four = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='d_four')
+    d_sub = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='d_sub')
+    m_one = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_one')
+    m_two = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_two')
+    m_three = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_three')
+    m_four = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_four')
+    m_sub = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_sub')
+    f_one = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='f_one')
+    f_two = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='f_two')
+    f_three = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='f_three')
+    f_sub = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='f_sub')
