@@ -1,4 +1,4 @@
-from rest_framework import seyerializers
+from rest_framework import serializers
 from api.models import *
 
 class TeamSerializer(serializers.ModelSerializer):
