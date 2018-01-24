@@ -89,7 +89,6 @@ class Roster(models.Model):
     m_one = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_one')
     m_two = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_two')
     m_three = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_three')
-    m_four = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_four')
     m_sub = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='m_sub')
     f_one = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='f_one')
     f_two = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='f_two')
