@@ -71,6 +71,7 @@ class Club(models.Model):
     players = models.ManyToManyField(Player)
 
 class Matchweek(models.Model):
+    week_number = models.IntegerField()
     start_date = models.DateField(blank=False)
     end_date = models.DateField(blank=False)
 
