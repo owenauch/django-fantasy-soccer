@@ -75,7 +75,8 @@ class Matchweek(models.Model):
     end_date = models.DateField(blank=False)
 
 class Roster(models.Model):
-    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    # club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    manager_name = models.CharField(max_length=200, default='N/A')
     week = models.ForeignKey(Matchweek, on_delete=models.CASCADE)
     gk = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='gk')
     gk_sub = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='gk_sub')
