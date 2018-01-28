@@ -104,10 +104,41 @@ def generate_scored_roster(roster, matchweek):
             points += 1
         scored_players[idx]['points'] = points
 
-    # finally, get the total score
+    # deal with subs and get total score
     total_points = 0
-    for player in scored_players:
-        total_points += player['points']
+    total_points += scored_players[0]['points']
+    # check if goalie sub is necessary
+    if (scored_players[0]['minutes_played'] == 0):
+        total_points += scored_players[1]['points']
+
+    total_points += scored_players[2]['points']
+    total_points += scored_players[3]['points']
+    total_points += scored_players[4]['points']
+    total_points += scored_players[5]['points']
+    # check if defense sub is necessary
+    if (scored_players[2]['minutes_played'] == 0
+    or scored_players[3]['minutes_played'] == 0
+    or scored_players[4]['minutes_played'] == 0
+    or scored_players[5]['minutes_played'] == 0):
+        total_points += scored_players[6]['points']
+
+    total_points += scored_players[7]['points']
+    total_points += scored_players[8]['points']
+    total_points += scored_players[9]['points']
+    # check if midfield sub is necessary
+    if (scored_players[7]['minutes_played'] == 0
+    or scored_players[8]['minutes_played'] == 0
+    or scored_players[9]['minutes_played'] == 0):
+        total_points += scored_players[10]['points']
+
+    total_points += scored_players[11]['points']
+    total_points += scored_players[12]['points']
+    total_points += scored_players[13]['points']
+    # check if forward sub is necessary
+    if (scored_players[11]['minutes_played'] == 0
+    or scored_players[12]['minutes_played'] == 0
+    or scored_players[13]['minutes_played'] == 0):
+        total_points += scored_players[14]['points']
 
     return {
         'total_points': round(total_points, 1),
