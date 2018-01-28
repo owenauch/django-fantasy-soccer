@@ -31,5 +31,5 @@ class MatchweekDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MatchweekSerializer
 
 class ScoredRostersList(APIView):
-    def get(self, request, format=None):
-        return null
+    def get(self, request, matchweek_pk, format=None):
+        rosters = Roster.objects.filter(week=matchweek_pk)

@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^roster/(?P<pk>[0-9]+)/$', views.RosterDetail.as_view()),
     url(r'^matchweeks/$', views.MatchweekList.as_view()),
     url(r'^matchweek/(?P<pk>[0-9]+)/$', views.MatchweekDetail.as_view()),
-    path('matchweek/<int:matchweek_pk>/scored_rosters', views.ScoredRostersList.as_view())
+    path('matchweek/<int:matchweek_pk>/scored_rosters/', views.ScoredRostersList.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -35,5 +35,3 @@ class RosterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Roster
         fields = '__all__'
-
-
