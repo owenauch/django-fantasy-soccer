@@ -111,7 +111,8 @@ def generate_scored_roster(roster, matchweek):
 
     return {
         'total_points': round(total_points, 1),
-        'player_info': scored_players
+        'player_info': scored_players,
+        'manager_name': roster.manager_name
     }
   
 
