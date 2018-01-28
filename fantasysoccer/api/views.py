@@ -150,4 +150,8 @@ class ScoredRostersList(APIView):
     def get(self, request, matchweek_pk, format=None):
         rosters = Roster.objects.filter(week=matchweek_pk)
         matchweek = Matchweek.objects.get(pk=matchweek_pk)
-        return Response({})
+        # apply function to get scored roster to all of them and return
+        scored_rosters = []
+        for roster in rosters:
+            scored_rosters.append(generate_scored_roster(roster, matchweek))
+        return Response(scored_rosters)
