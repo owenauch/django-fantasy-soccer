@@ -1,6 +1,9 @@
 from api.models import *
 from api.serializers import *
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class PlayerList(generics.ListCreateAPIView):
@@ -23,3 +26,10 @@ class MatchweekList(generics.ListCreateAPIView):
     queryset = Matchweek.objects.all()
     serializer_class = MatchweekSerializer
 
+class MatchweekDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Matchweek.objects.all()
+    serializer_class = MatchweekSerializer
+
+class ScoredRostersList(APIView):
+    def get(self, request, format=None):
+        return null
