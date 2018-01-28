@@ -24,15 +24,26 @@ def generate_scored_roster(roster, matchweek):
         match_stats = MatchStat.objects.filter(player_id=getattr(roster, position),
         match_date__range=(matchweek.start_date, matchweek.end_date))
         player_stats = {
-            "minutes_played": 0,
-            "goals": 0,
-            "assists": 0
+            'minutes_played': 0,
+            'goals': 0,
+            'assists': 0,
+            'penalty_goals': 0,
+            'shots_on_goal': 0,
+            'shots_off_goal': 0,
+            'crosses': 0,
+            'successful_tackles': 0,
+            'yellow_cards': 0,
+            'yellow_red_cards': 0,
+            'red_cards': 0,
+            'shots_saved': 0,
+            'goals_conceded': 0
         }
 
+        # add to stats if there's only one
         if (len(match_stats) == 1):
             for stat in stats:
                 new_stat = getattr(match_stats[0], stat)
-                setattr(player_stats, stat, new_stat)
+                player_stats[stat] = new_stat
         # if there are multiple, loop through and add them together
         else:
             for idx, match_stat in enumerate(match_stats):
@@ -43,10 +54,65 @@ def generate_scored_roster(roster, matchweek):
                         new_value = getattr(match_stats[idx], stat) + getattr(player_stats, stat)
                         setattr(player_stats, stat, getattr(match_stats[idx], new_value))
 
+        # get player name and team
+        player = getattr(roster, position)
+        player_stats['name'] = player.name
+        team = Team.objects.get(pk=player.team_id)
+        player_stats['team'] = team.name
+
+        # append to list
         scored_players.append(player_stats)
 
-    return scored_players
+    # calculate points for each player
+    # first goalies and defenders
+    for idx, position in enumerate(positions[:7]):
+        player = scored_players[idx]
+        points = player['goals'] * 8
+        points += player['penalty_goals'] * -4
+        points += player['assists'] * 4
+        points += player['shots_off_goal'] * .8
+        points += player['shots_on_goal']
+        points += player['successful_tackles'] * 2
+        points += player['shots_saved'] * 2
+        points -= player['yellow_cards']
+        points -= player['yellow_red_cards']
+        points -= player['red_cards'] * 3
+        if (player['minutes_played'] != 0 and player['goals_conceded'] == 0):
+            points += 4
+        if (player['minutes_played'] > 60):
+            points += 1
+        if (player['minutes_played'] == 90):
+            points += 1
+        scored_players[idx]['points'] = points
 
+    # then, attacking players
+    for idx, position in enumerate(positions[-8:]):
+        idx = idx + 7
+        player = scored_players[idx]
+        points = player['goals'] * 6
+        points += player['penalty_goals'] * -2
+        points += player['assists'] * 3
+        points += player['shots_off_goal'] * .8
+        points += player['shots_on_goal']
+        points += player['successful_tackles'] * 1
+        points -= player['yellow_cards']
+        points -= player['yellow_red_cards']
+        points -= player['red_cards'] * 3
+        if (player['minutes_played'] > 60):
+            points += 1
+        if (player['minutes_played'] == 90):
+            points += 1
+        scored_players[idx]['points'] = points
+
+    # finally, get the total score
+    total_points = 0
+    for player in scored_players:
+        total_points += player['points']
+
+    return {
+        'total_points': round(total_points, 1),
+        'player_info': scored_players
+    }
   
 
 class PlayerList(generics.ListCreateAPIView):
