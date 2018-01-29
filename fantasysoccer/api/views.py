@@ -49,10 +49,11 @@ def generate_scored_roster(roster, matchweek):
             for idx, match_stat in enumerate(match_stats):
                 for stat in stats:
                     if (idx == 0):
-                        setattr(player_stats, stat, getattr(match_stats[0], stat))
+                        new_stat = getattr(match_stats[0], stat)
+                        player_stats[stat] = new_stat
                     else:
-                        new_value = getattr(match_stats[idx], stat) + getattr(player_stats, stat)
-                        setattr(player_stats, stat, getattr(match_stats[idx], new_value))
+                        new_value = getattr(match_stats[idx], stat) + player_stats[stat]
+                        player_stats[stat] = new_value
 
         # get player name and team
         player = getattr(roster, position)
@@ -81,7 +82,7 @@ def generate_scored_roster(roster, matchweek):
             points += 4
         if (player['minutes_played'] > 60):
             points += 1
-        if (player['minutes_played'] == 90):
+        if (player['minutes_played'] >= 90):
             points += 1
         scored_players[idx]['points'] = points
 
@@ -100,7 +101,7 @@ def generate_scored_roster(roster, matchweek):
         points -= player['red_cards'] * 3
         if (player['minutes_played'] > 60):
             points += 1
-        if (player['minutes_played'] == 90):
+        if (player['minutes_played'] >= 90):
             points += 1
         scored_players[idx]['points'] = points
 
@@ -143,7 +144,8 @@ def generate_scored_roster(roster, matchweek):
     return {
         'total_points': round(total_points, 1),
         'player_info': scored_players,
-        'manager_name': roster.manager_name
+        'manager_name': roster.manager_name,
+        'id': roster.id
     }
   
 
