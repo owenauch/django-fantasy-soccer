@@ -25,7 +25,7 @@ SECRET_KEY = 'ob&!*r#y7u(^x%u41n9^z-tpxv&cm85%o@6k!h7+1a*6a#(hyp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['polar-wave-60090.herokuapp.com']
+ALLOWED_HOSTS = ['dilly-league.herokuapp.com']
 
 
 # Application definition
