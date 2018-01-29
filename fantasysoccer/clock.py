@@ -1,10 +1,10 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
-import os
+import get_match_stats
 
 sched = BlockingScheduler()
 
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
-    os.system('./get_match_stats.py')
+    get_match_stats.get_match_stats()
 
 sched.start()
