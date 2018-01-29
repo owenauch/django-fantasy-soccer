@@ -60,7 +60,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
+    'localhost:3000',
+    'https://dilly-league.herokuapp.com'
 )
 
 ROOT_URLCONF = 'fantasysoccer.urls'
