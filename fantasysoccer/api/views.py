@@ -145,7 +145,8 @@ def generate_scored_roster(roster, matchweek):
         'total_points': round(total_points, 1),
         'player_info': scored_players,
         'manager_name': roster.manager_name,
-        'id': roster.id
+        'id': roster.id,
+        "matchweek": roster.week.id
     }
   
 
@@ -187,5 +188,15 @@ class ScoredRostersList(APIView):
         # apply function to get scored roster to all of them and return
         scored_rosters = []
         for roster in rosters:
+            scored_rosters.append(generate_scored_roster(roster, matchweek))
+        return Response(scored_rosters)
+
+class ScoredRostersAll(APIView):
+    def get(self, request, format=None):
+        rosters = Roster.objects.all()
+        # apply function to get scored roster to all of them and return
+        scored_rosters = []
+        for roster in rosters:
+            matchweek = roster.week
             scored_rosters.append(generate_scored_roster(roster, matchweek))
         return Response(scored_rosters)
