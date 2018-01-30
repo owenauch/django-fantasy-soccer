@@ -11,7 +11,10 @@ djangorestframework==3.7.3
 gunicorn==19.7.1
 idna==2.6
 psycopg2==2.7.3.2
+<<<<<<< HEAD
 python-decouple==3.1
+=======
+>>>>>>> ef2d09ce6f9d212f60dd96b3e2523971b00dd926
 pytz==2017.3
 requests==2.18.4
 six==1.11.0
