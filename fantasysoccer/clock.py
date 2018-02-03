@@ -10,3 +10,4 @@ def timed_job():
     get_match_stats.get_match_stats(datetime.datetime.today().strftime('%Y-%m-%d'))
 
 sched.start()
+print 'Scheduler started'
