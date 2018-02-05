@@ -332,4 +332,4 @@ class UpdateMatchStats(APIView):
 class UpdatePlayerStats(APIView):
     def get(self, request, format=None):
         update_players()
-        return date
+        return Response({'message': 'Updated players successfully'})
