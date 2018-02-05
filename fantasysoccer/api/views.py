@@ -200,3 +200,11 @@ class ScoredRostersAll(APIView):
             matchweek = roster.week
             scored_rosters.append(generate_scored_roster(roster, matchweek))
         return Response(scored_rosters)
+
+class UpdateMatchStats(APIView):
+    def get(self, request, date, format=None):
+        return Response(date)
+
+class UpdatePlayerStats(APIView):
+    def get(self, request, format=None):
+        return date
