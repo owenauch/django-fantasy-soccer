@@ -23,7 +23,7 @@ def update_players():
     print('Starting request for players...')
 
     url_front = 'https://api.sportradar.us/soccer-t3/eu/en/teams/sr:competitor:'
-    url_back = '/profile.json?api_key=wen4p2gkyru39s2cxx3c5wae'
+    url_back = '/profile.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
 
     # go through each team
     teams = Team.objects.all()

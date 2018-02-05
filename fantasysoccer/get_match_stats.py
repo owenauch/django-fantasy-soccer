@@ -23,11 +23,11 @@ def get_match_stats (date_string):
     print('Starting request for match stats...')
 
     schedule_url_front = 'https://api.sportradar.us/soccer-xt3/eu/en/schedules/'
-    schedule_url_back = '/schedule.json?api_key=wen4p2gkyru39s2cxx3c5wae'
+    schedule_url_back = '/schedule.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
     league_ids = ['ENG','ESP','ITA','FRA','DEU']
 
     match_url_front = 'https://api.sportradar.us/soccer-xt3/eu/en/matches/'
-    match_url_back = '/timeline.json?api_key=wen4p2gkyru39s2cxx3c5wae'
+    match_url_back = '/timeline.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
 
     # get match ids
     schedule_url = schedule_url_front + date_string + schedule_url_back
