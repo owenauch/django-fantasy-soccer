@@ -32,6 +32,7 @@ def get_match_stats (date_string):
     # get match ids
     schedule_url = schedule_url_front + date_string + schedule_url_back
     schedule_response = requests.get(schedule_url)
+    print(schedule_response)
     schedule_data = schedule_response.json()
     events = schedule_data['sport_events']
     match_ids = []
