@@ -22,7 +22,7 @@ from api.models import *
 print('Starting request for teams...')
 
 url_front = 'https://api.sportradar.us/soccer-t3/eu/en/tournaments/sr:tournament:'
-url_back = '/info.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
+url_back = '/info.json?api_key=wen4p2gkyru39s2cxx3c5wae'
 league_ids = ['8','17','23','34','35']
 
 # get teams for every league
