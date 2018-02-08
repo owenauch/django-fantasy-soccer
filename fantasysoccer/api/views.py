@@ -156,11 +156,11 @@ def get_match_stats (date_string):
     print('Starting request for match stats...')
 
     schedule_url_front = 'https://api.sportradar.us/soccer-xt3/eu/en/schedules/'
-    schedule_url_back = '/schedule.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
+    schedule_url_back = '/schedule.json?api_key=wen4p2gkyru39s2cxx3c5wae'
     league_ids = ['ENG','ESP','ITA','FRA','DEU']
 
     match_url_front = 'https://api.sportradar.us/soccer-xt3/eu/en/matches/'
-    match_url_back = '/timeline.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
+    match_url_back = '/timeline.json?api_key=wen4p2gkyru39s2cxx3c5wae'
 
     # get match ids
     schedule_url = schedule_url_front + date_string + schedule_url_back
@@ -235,7 +235,7 @@ def update_players():
     print('Starting request for players...')
 
     url_front = 'https://api.sportradar.us/soccer-t3/eu/en/teams/sr:competitor:'
-    url_back = '/profile.json?api_key=qq5z5t88838bu8kcwe4qvbjn'
+    url_back = '/profile.json?api_key=wen4p2gkyru39s2cxx3c5wae'
 
     # go through each team
     teams = Team.objects.all()
