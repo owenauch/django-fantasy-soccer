@@ -1,0 +1,2 @@
+# Django Fantasy Soccer
+This operates as a Django backend for a fantasy soccer site of my own design. This backend regularly requests an external API for data on players and matches, cleans the data, and stores it in a PostgresQL database. The backend also operates as an API for a custom site for participants in the league to set rosters and track the performance of their players throughout the week.
